@@ -3,7 +3,6 @@
 import { ChangeEvent, FormEvent } from "react";
 
 import { BadgePayload, WorkType } from "@/services/api";
-import { TfiSaveAlt } from "react-icons/tfi";
 import { IoSaveOutline } from "react-icons/io5";
 
 interface Props {
@@ -72,16 +71,6 @@ export default function BadgeForm({ data, submitting, feedback, onChange, onSubm
           required
           className="border border-gray-300 outline-0 rounded-full px-4 py-2 text-lg"
         />
-        {/* <input
-          placeholder="Age"
-          type="number"
-          min={0}
-          max={120}
-          value={data.age}
-          onChange={(e) => setField("age", Number(e.target.value))}
-          required
-          className="border border-gray-400 outline-0 rounded-lg px-4 py-2 text-lg"
-        /> */}
         <input
           placeholder="Date de naissance"
           type="date"
@@ -98,6 +87,13 @@ export default function BadgeForm({ data, submitting, feedback, onChange, onSubm
           className="border border-gray-300 outline-0 rounded-full px-4 py-2 text-lg"
         />
         <input
+          placeholder="Nationalité"
+          value={data.nationalite}
+          onChange={(e) => setField("nationalite", e.target.value)}
+          required
+          className="border border-gray-300 outline-0 rounded-full px-4 py-2 text-lg"
+        />
+        <input
           placeholder="Téléphone"
           type="tel"
           inputMode="numeric"
@@ -107,14 +103,14 @@ export default function BadgeForm({ data, submitting, feedback, onChange, onSubm
           className="border border-gray-300 outline-0 rounded-full px-4 py-2 text-lg"
         />
         <input
-          placeholder="Personne à contacter en cas d'urgence"
+          placeholder="Ami proche à contacter"
           value={data.contact_urgence}
           onChange={(e) => setField("contact_urgence", toUpper(e.target.value))}
           required
           className="border border-gray-300 outline-0 rounded-full px-4 py-2 text-lg"
         />
         <input
-          placeholder="Numéro de la personne à contacter"
+          placeholder="Numéro ami proche à contacter"
           type="tel"
           inputMode="numeric"
           value={data.contact_urgence_numero}
@@ -123,16 +119,25 @@ export default function BadgeForm({ data, submitting, feedback, onChange, onSubm
           className="border border-gray-300 outline-0 rounded-full px-4 py-2 text-lg"
         />
         <input
-          placeholder="Adresse domicile"
-          value={data.adresse}
-          onChange={(e) => setField("adresse", e.target.value)}
+          placeholder="Membre de famille à contacter"
+          value={data.contact_membre_urgence}
+          onChange={(e) => setField("contact_membre_urgence", toUpper(e.target.value))}
           required
           className="border border-gray-300 outline-0 rounded-full px-4 py-2 text-lg"
         />
         <input
-          placeholder="Nationalité"
-          value={data.nationalite}
-          onChange={(e) => setField("nationalite", e.target.value)}
+          placeholder="Numéro membre de famille"
+          type="tel"
+          inputMode="numeric"
+          value={data.contact_membre_urgence_numero}
+          onChange={(e) => setField("contact_membre_urgence_numero", onlyDigits(e.target.value))}
+          required
+          className="border border-gray-300 outline-0 rounded-full px-4 py-2 text-lg"
+        />
+        <input
+          placeholder="Adresse domicile"
+          value={data.adresse}
+          onChange={(e) => setField("adresse", e.target.value)}
           required
           className="border border-gray-300 outline-0 rounded-full px-4 py-2 text-lg"
         />
@@ -175,7 +180,7 @@ export default function BadgeForm({ data, submitting, feedback, onChange, onSubm
         <input type="file" className="w-full cursor-pointer bg-gray-100 p-4 rounded-full border-2 border-gray-200" accept="image/*" onChange={handlePhoto} />
       </div>
 
-      {feedback ? <p style={{ marginBottom: 0 }}>{feedback}</p> : null}
+      {/* {feedback ? <p style={{ marginBottom: 0 }}>{feedback}</p> : "null"} */}
 
       <button
         type="submit"

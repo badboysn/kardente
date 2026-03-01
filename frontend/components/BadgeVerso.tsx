@@ -7,8 +7,8 @@ interface Props {
 export default function BadgeVerso({ data }: Props) {
   const employeur =
     data.type_travail === "groupe"
-      ? `${data.employeur_prenom ?? ""} ${data.employeur_nom ?? ""}`.trim() || "-"
-      : "N/A";
+      ? `${data.employeur_prenom ?? ""} ${data.employeur_nom ?? ""}`.trim() || "..."
+      : "...";
 
   return (
     <div
@@ -47,28 +47,48 @@ export default function BadgeVerso({ data }: Props) {
           clipPath: "polygon(0 28%, 100% 100%, 0 100%)"
         }}
       />
-      <div style={{ position: "relative", zIndex: 1, fontSize: 14, fontWeight: 800, marginBottom: 10, color: "#1a3e6f" }}>
-        Infos complementaires
-      </div>
+      <h3 className="font-semibold text-md text-blue-900">Informations complementaires</h3>
       <div
-        style={{
-          position: "relative",
-          zIndex: 1,
-          fontSize: 12,
-          lineHeight: 1.55,
-          fontWeight: 600,
-          background: "rgba(255,255,255,0.86)",
-          border: "none",
-          borderRadius: 10,
-          padding: "9px 10px",
-          width: 278
-        }}
+        className="
+          relative
+          z-1
+          text-[12px]
+          leading-[1.55]
+          font-semibold
+          border-0
+          rounded-[10px]
+          px-2
+          py-2
+          w-70
+          h-[90%]
+          flex flex-col justify-center items-center gap-3
+        "
       >
-        <div>Age: {data.age || "-"}</div>
-        <div>Contact urgence: {data.contact_urgence || "-"}</div>
-        <div>Numero urgence: {data.contact_urgence_numero || "-"}</div>
-        <div>Type de travail: {data.type_travail}</div>
-        <div>Employeur: {employeur}</div>
+        {/* <div>Age: {data.age || "-"}</div> */}
+        <div className="flex flex-col items-center">
+          <span className="font-extralight text-lg">Ami proche</span>
+          <span className="text-lg">{data.contact_urgence || "..."}</span>
+        </div>
+        <div className="flex flex-col items-center">
+          <span className="font-extralight text-lg">Contact ami proche</span>
+          <span className="text-lg">{data.contact_urgence_numero || "..."}</span>
+        </div>
+        <div className="flex flex-col items-center">
+          <span className="font-extralight text-lg">Membre de famille</span>
+          <span className="text-lg">{data.contact_membre_urgence || "..."}</span>
+        </div>
+        <div className="flex flex-col items-center">
+          <span className="font-extralight text-lg">Contact Membre de famille</span>
+          <span className="text-lg">{data.contact_membre_urgence_numero || "..."}</span>
+        </div>
+        <div className="flex flex-col items-center">
+          <span className="font-extralight text-lg">Type de travail</span>
+          <span className="text-lg">{data.type_travail || "..."}</span>
+        </div>
+        <div className="flex flex-col items-center">
+          <span className="font-extralight text-lg">Employeur</span>
+          <span className="text-lg">{employeur || "..."}</span>
+        </div>
       </div>
 
       <div style={{ position: "absolute", bottom: 14, left: 14, fontSize: 10, color: "#2d4a6d", zIndex: 1 }}>

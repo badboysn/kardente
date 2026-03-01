@@ -17,11 +17,14 @@ import { MdSaveAlt } from "react-icons/md";
 const initialData: BadgePayload = {
   nom: "",
   prenom: "",
+  age: 0,
   date_naissance: "",
   lieu_naissance: "",
   telephone: "",
   contact_urgence: "",
   contact_urgence_numero: "",
+  contact_membre_urgence: "",
+  contact_membre_urgence_numero: "",
   nationalite: "",
   profession: "",
   type_travail: "individuel",
@@ -105,7 +108,7 @@ export default function DashboardPage() {
         </div>
       </div>
 
-      <div className="flex gap-10 px-[10%] w-full">
+      <div className="flex gap-10 px-[10%] w-full pb-16 ">
         
         <BadgeForm data={data} onChange={handleDataChange} onSubmit={submit} submitting={submitting} feedback={feedback} />
         

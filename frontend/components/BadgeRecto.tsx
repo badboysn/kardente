@@ -13,7 +13,7 @@ export default function BadgeRecto({ data }: Props) {
           bg-gradient-to-br 
         from-blue-950 
         via-blue-950 
-        to-lime-600
+        to-lime-800
           rounded-[14px]
           p-3
           text-white
@@ -35,7 +35,7 @@ export default function BadgeRecto({ data }: Props) {
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={data.photo_base64} alt="previex" className="w-full h-full object-cover rounded-2xl shadow" />
               ) : (
-                <div style={{ width: "100%", height: "100%", background: "#e2e8f0" }} />
+                <div className="w-full h-full bg-gray-50/5 rounded-2xl" />
               )}
             </div>
 

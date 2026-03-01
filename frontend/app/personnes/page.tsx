@@ -8,6 +8,11 @@ import BadgeRecto from "@/components/BadgeRecto";
 import BadgeVerso from "@/components/BadgeVerso";
 import { BadgePayload, BadgeResponse, listBadges } from "@/services/api";
 import { downloadBadgeRecto } from "@/utils/generateBadge";
+import { AiOutlineLogout } from "react-icons/ai";
+import { LuLayoutDashboard } from "react-icons/lu";
+import { HiRefresh } from "react-icons/hi";
+import { MdSaveAlt } from "react-icons/md";
+
 
 export default function PersonnesPage() {
   const router = useRouter();
@@ -66,7 +71,9 @@ export default function PersonnesPage() {
     employeur_nom: item.employeur_nom,
     employeur_prenom: item.employeur_prenom,
     photo_base64: item.photo_base64,
-    adresse: item.adresse
+    adresse: item.adresse,
+    contact_membre_urgence: item.contact_membre_urgence,
+    contact_membre_urgence_numero: item.contact_membre_urgence_numero
   });
 
   const handleDownloadRecto = async (item: BadgeResponse) => {
@@ -101,15 +108,17 @@ export default function PersonnesPage() {
   }, []);
 
   return (
-    <main className="app-main fade-in">
-      <div className="page-header">
-        <h1 style={{ margin: 0 }}>Personnes enregistrees</h1>
-        <div className="page-actions">
-          <button className="button-secondary" onClick={() => router.push("/dashboard")}>
-            Retour dashboard
+    <main className="app-main fade-in bg-gray-100 min-h-screen">
+      <div className="bg-white flex justify-between py-6 mb-10 px-[10%] border-b border-gray-300">
+        <h1 className="text-4xl font-bold">Kardente</h1>
+        <div className="flex gap-4">
+          <button className="cursor-pointer flex gap-2 items-center font-semibold p-2 px-4 rounded-xl" onClick={() => router.push("/dashboard")}>
+            <LuLayoutDashboard size={25}/>
+            Retour Tableau de bord
           </button>
-          <button className="button-secondary" onClick={load} disabled={loading}>
-            {loading ? "Chargement..." : "Rafraichir"}
+          <button className="cursor-pointer flex gap-2 items-center bg-green-500 text-white p-2 px-4 rounded-xl" onClick={load} disabled={loading}>
+            <HiRefresh size={20}/>
+            {loading ? "Chargement" : "Rafraichir"}
           </button>
         </div>
       </div>
@@ -117,48 +126,53 @@ export default function PersonnesPage() {
       {error ? <p style={{ color: "#b91c1c" }}>{error}</p> : null}
       {!loading && !error && items.length === 0 ? <p>Aucune personne enregistree.</p> : null}
 
-      <div style={{ marginTop: 12 }}>
+      <section className="px-[10%] flex flex-col gap-4">
+
+      <div>
         <input
           placeholder="Filtrer par nom ou prenom"
           value={search}
           onChange={(event) => setSearch(event.target.value)}
-          style={{ width: "100%", maxWidth: 380, padding: 10 }}
+          className="border border-gray-300 rounded-full py-3 px-4 text-xl outline-0"
         />
       </div>
 
       {filteredItems.length > 0 ? (
-        <div className="card slide-up" style={{ marginTop: 16, overflowX: "auto" }}>
+        <div className="overflow-x-auto bg-white min-h-[60vh] mt-4 rounded-2xl">
           <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 14 }}>
             <thead>
-              <tr style={{ background: "#f8fafc", textAlign: "left" }}>
-                <th style={{ padding: 8, borderBottom: "1px solid #e5e7eb" }}>Nom complet</th>
-                <th style={{ padding: 8, borderBottom: "1px solid #e5e7eb" }}>Profession</th>
-                <th style={{ padding: 8, borderBottom: "1px solid #e5e7eb" }}>Telephone</th>
-                <th style={{ padding: 8, borderBottom: "1px solid #e5e7eb" }}>Type travail</th>
-                <th style={{ padding: 8, borderBottom: "1px solid #e5e7eb" }}>Date creation</th>
-                <th style={{ padding: 8, borderBottom: "1px solid #e5e7eb" }}>Actions</th>
+              <tr className="bg-gray-200 text-xl">
+                <th className="text-start p-4">Nom complet</th>
+                <th className="text-start p-4">Profession</th>
+                <th className="text-start p-4">Telephone</th>
+                <th className="text-start p-4">Type travail</th>
+                <th className="text-start p-4">Date creation</th>
+                <th className="text-start p-4">Actions</th>
               </tr>
             </thead>
             <tbody>
               {filteredItems.map((item) => (
                 <tr key={item.id}>
-                  <td style={{ padding: 8, borderBottom: "1px solid #f1f5f9" }}>
-                    <Link href={`/personnes/${item.id}`} style={{ color: "#1d4ed8", fontWeight: 600 }}>
+                  <td className="p-4 text-lg border-b border-gray-100">
+                    <Link href={`/personnes/${item.id}`} className="text-green-600 font-semibold">
                       {item.prenom} {item.nom}
                     </Link>
                   </td>
-                  <td style={{ padding: 8, borderBottom: "1px solid #f1f5f9" }}>{item.profession || "-"}</td>
-                  <td style={{ padding: 8, borderBottom: "1px solid #f1f5f9" }}>{item.telephone || "-"}</td>
-                  <td style={{ padding: 8, borderBottom: "1px solid #f1f5f9" }}>{item.type_travail}</td>
-                  <td style={{ padding: 8, borderBottom: "1px solid #f1f5f9" }}>
+                  <td className="p-4 text-lg border-b border-gray-100">{item.profession || "-"}</td>
+                  <td className="p-4 text-lg border-b border-gray-100">{item.telephone || "-"}</td>
+                  <td className="p-4 text-lg border-b border-gray-100">{item.type_travail}</td>
+                  <td className="p-4 text-lg border-b border-gray-100">
                     {new Date(item.created_at).toLocaleString("fr-FR")}
                   </td>
                   <td style={{ padding: 8, borderBottom: "1px solid #f1f5f9" }}>
                     <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-                      <button onClick={() => handleDownloadRecto(item)} disabled={downloadingKey === `${item.id}-recto`}>
+                      <button onClick={() => handleDownloadRecto(item)} disabled={downloadingKey === `${item.id}-recto`} className="flex items-center gap-2 bg-green-600 rounded-full text-white px-6 py-2">
+                        <MdSaveAlt size={20}/>
                         {downloadingKey === `${item.id}-recto` ? "Generation..." : "Recto (PNG)"}
                       </button>
-                      <button onClick={() => handleDownloadVerso(item)} disabled={downloadingKey === `${item.id}-verso`}>
+
+                      <button onClick={() => handleDownloadVerso(item)} disabled={downloadingKey === `${item.id}-verso`} className="flex items-center gap-2 bg-green-800 rounded-full text-white px-6">
+                        <MdSaveAlt size={20}/>
                         {downloadingKey === `${item.id}-verso` ? "Generation..." : "Verso (PNG)"}
                       </button>
                     </div>
@@ -189,6 +203,8 @@ export default function PersonnesPage() {
           </div>
         </div>
       ) : null}
+
+      </section>
     </main>
   );
 }

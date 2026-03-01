@@ -3,11 +3,14 @@ export type WorkType = "individuel" | "groupe";
 export interface BadgePayload {
   nom: string;
   prenom: string;
+  age: number;
   date_naissance: string;
   lieu_naissance: string;
   telephone: string;
   contact_urgence: string;
   contact_urgence_numero: string;
+  contact_membre_urgence: string;
+  contact_membre_urgence_numero: string;
   nationalite: string;
   profession: string;
   type_travail: WorkType;
