@@ -3,7 +3,6 @@ export type WorkType = "individuel" | "groupe";
 export interface BadgePayload {
   nom: string;
   prenom: string;
-  age: number;
   date_naissance: string;
   lieu_naissance: string;
   telephone: string;
@@ -23,7 +22,9 @@ export interface BadgeResponse extends BadgePayload {
   created_at: string;
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+// const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_BASE_URL = "http://localhost:8000/api";
+
 
 function getApiBaseUrl(): string {
   if (API_BASE_URL) {
@@ -49,7 +50,7 @@ async function request<T>(
 
   let response: Response;
   try {
-    response = await fetch(`${getApiBaseUrl()}${path}`, {
+    response = await fetch(`${API_BASE_URL}${path}`, {
       ...options,
       headers
     });

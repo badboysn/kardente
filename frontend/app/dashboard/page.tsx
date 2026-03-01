@@ -9,10 +9,14 @@ import BadgeVerso from "@/components/BadgeVerso";
 import { BadgePayload, createBadge } from "@/services/api";
 import { downloadBadgeRecto } from "@/utils/generateBadge";
 
+import { AiOutlineLogout } from "react-icons/ai";
+import { PiIdentificationBadgeLight } from "react-icons/pi";
+import { FaRegIdBadge } from "react-icons/fa6";
+import { MdSaveAlt } from "react-icons/md";
+
 const initialData: BadgePayload = {
   nom: "",
   prenom: "",
-  age: 0,
   date_naissance: "",
   lieu_naissance: "",
   telephone: "",
@@ -86,65 +90,67 @@ export default function DashboardPage() {
   };
 
   return (
-    <main className="app-main fade-in">
-      <div className="page-header">
-        <h1>Dashboard - Generation de badge</h1>
-        <div className="page-actions">
-          <button className="button-secondary" onClick={() => router.push("/personnes")}>
-            Personnes enregistrees
+    <main className="bg-gray-100 min-h-screen">
+      <div className="bg-white flex justify-between py-6 mb-10 px-[10%] border-b border-gray-300">
+        <h1 className="text-4xl font-bold">Kardente</h1>
+        <div className="flex gap-4">
+          <button className="cursor-pointer flex gap-2 items-center font-semibold p-2 px-4 rounded-xl" onClick={() => router.push("/personnes")}>
+            <PiIdentificationBadgeLight size={25}/>
+            Badges générés
           </button>
-          <button className="button-secondary" onClick={logout}>
-            Deconnexion
+          <button className="cursor-pointer flex gap-2 items-center bg-red-500 text-white p-2 px-4 rounded-xl" onClick={logout}>
+            <AiOutlineLogout size={20}/>
+            Déconnexion
           </button>
         </div>
       </div>
 
-      <div className="dashboard-grid">
+      <div className="flex gap-10 px-[10%] w-full">
+        
         <BadgeForm data={data} onChange={handleDataChange} onSubmit={submit} submitting={submitting} feedback={feedback} />
-        <section className="card slide-up">
-          <h2 style={{ marginTop: 0 }}>Previsualisation</h2>
+        
+        <section className="bg-blue-60 flex flex-col gap-4">
+          
+          <h2 className="italic text-sm">Prévisualisation</h2>
+          
           <div style={{ display: "flex", flexWrap: "wrap", gap: 16 }}>
-            <div>
-              <div style={{ marginBottom: 8, fontWeight: 600 }}>Recto</div>
+            <div className="flex flex-col gap-2">
+              <span className="font-bold">Recto</span>
               <div ref={rectoRef}>
                 <BadgeRecto data={data} />
               </div>
             </div>
-            <div>
-              <div style={{ marginBottom: 8, fontWeight: 600 }}>Verso</div>
+            <div className="flex flex-col gap-2">
+              <span className="font-bold">Verso</span>
               <div ref={versoRef}>
                 <BadgeVerso data={data} />
               </div>
             </div>
           </div>
 
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 16 }}>
+          {!isSavedForDownload &&
+            <p className="text-gray-500 italic">Enregistrer d'abord la formulaire avant de pouvoir télécharger.</p>
+          }
+
+          <div className="flex gap-4">
             <button
               onClick={downloadRecto}
               disabled={!canDownload}
-              style={{
-                background: canDownload ? "#0f766e" : "#94a3b8",
-                color: "#fff",
-                cursor: canDownload ? "pointer" : "not-allowed"
-              }}
+              className={`px-4 py-2 rounded-full flex items-center gap-2 ${canDownload ? "pointer" : "not-allowed"} ${ canDownload ? "bg-green-500 text-white cursor-pointer" : "bg-gray-200 text-gray-500 cursor-not-allowed"}`}
             >
+              <MdSaveAlt size={20}/>
               Telecharger recto (PNG)
             </button>
             <button
               onClick={downloadVerso}
               disabled={!canDownload}
-              style={{
-                background: canDownload ? "#14532d" : "#94a3b8",
-                color: "#fff",
-                cursor: canDownload ? "pointer" : "not-allowed"
-              }}
+              className={`px-4 py-2 rounded-full flex items-center gap-2 ${canDownload ? "pointer" : "not-allowed"} ${ canDownload ? "bg-green-800 text-white cursor-pointer" : "bg-gray-200 text-gray-500 cursor-not-allowed"}`}
             >
+              <MdSaveAlt size={20}/>
               Telecharger verso (PNG)
             </button>
           </div>
-          {!isSavedForDownload ? (
-            <p style={{ marginTop: 8, color: "#64748b" }}>Enregistre d abord la fiche avant de telecharger.</p>
-          ) : null}
+          
         </section>
       </div>
     </main>

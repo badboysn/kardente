@@ -7,123 +7,68 @@ interface Props {
 export default function BadgeRecto({ data }: Props) {
   return (
     <div
-      style={{
-        width: 340,
-        height: 214,
-        background: "linear-gradient(145deg, #0e2f58 0%, #174a84 52%, #2f6fb3 100%)",
-        borderRadius: 14,
-        padding: 14,
-        color: "#ffffff",
-        position: "relative",
-        overflow: "hidden",
-        boxShadow: "0 8px 20px rgba(0,0,0,0.15)",
-        border: "none"
-      }}
+      className="
+          w-[340px]
+          h-[514px]
+          bg-gradient-to-br 
+        from-blue-950 
+        via-blue-950 
+        to-lime-600
+          rounded-[14px]
+          p-3
+          text-white
+          relative
+          overflow-hidden
+          shadow-[0_8px_20px_rgba(0,0,0,0.15)]
+          border-0
+        "
     >
-      <div
-        style={{
-          position: "relative",
-          zIndex: 3,
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "space-between"
-        }}
-      >
-        <div>
-          <div
-            style={{
-              fontWeight: 800,
-              fontSize: 16,
-              color: "#ffffff",
-              marginTop: 2,
-              letterSpacing: 0.6
-            }}
-          >
-            BADGE IDENTIFICATION
-          </div>
+      <div className="w-full h-full flex flex-col gap-6">
+        <div className="p-2 gap-4 flex flex-col">
 
-          <div style={{ marginTop: 10, display: "flex", gap: 10, alignItems: "center" }}>
-          <div
-            style={{
-              width: 68,
-              height: 82,
-              background: "#fff",
-              borderRadius: 12,
-              overflow: "hidden",
-              border: "none",
-              boxShadow: "0 4px 12px rgba(15,47,89,0.2)",
-              flexShrink: 0
-            }}
-          >
-            {data.photo_base64 ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={data.photo_base64} alt="Photo" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-            ) : (
-              <div style={{ width: "100%", height: "100%", background: "#e2e8f0" }} />
-            )}
-          </div>
-          <div
-            style={{
-              flex: 1,
-              minWidth: 0,
-              borderRadius: 8,
-              padding: "6px 8px"
-            }}
-          >
-            <div
-              style={{
-                fontSize: 16,
-                fontWeight: 800,
-                lineHeight: 1.1,
-                display: "-webkit-box",
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: "vertical",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                wordBreak: "break-word",
-                color: "#ffffff"
-              }}
-            >
-              {data.prenom} {data.nom}
+          <h2 className="uppercase text-center font-bold text-sm my-2">badge identification</h2>
+
+          <div className="flex flex-col justify-center items-center text-center gap-2">
+            
+            <div className="h-40 w-40 mb-4">
+              {data.photo_base64 ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={data.photo_base64} alt="previex" className="w-full h-full object-cover rounded-2xl shadow" />
+              ) : (
+                <div style={{ width: "100%", height: "100%", background: "#e2e8f0" }} />
+              )}
             </div>
-            <div style={{ fontSize: 12.5, color: "#e4efff", marginTop: 3 }}>Profession: {data.profession || "-"}</div>
-            <div style={{ fontSize: 12.5, color: "#e4efff" }}>Nationalite: {data.nationalite || "-"}</div>
+
+            <div className="flex flex-col">
+              <div className="text-2xl italic font-semibold">{data.prenom} {data.nom}</div>
+              <div className="text-xl font-extralight">{data.profession || "..."}</div>
+              <div className="text-lg font-thin">{data.nationalite || "..."}</div>
+            </div>
+
           </div>
         </div>
-        </div>
 
-        <div
-          style={{
-            marginTop: 8,
-            marginBottom: 10,
-            color: "#ffffff",
-            padding: "7px 10px",
-            borderRadius: 10,
-            fontSize: 12,
-            lineHeight: 1.2,
-            border: "none"
-          }}
-        >
-          <div>Ne(e) le: {data.date_naissance || "-"}</div>
-          <div>Lieu: {data.lieu_naissance || "-"}</div>
-          <div>Tel: {data.telephone || "-"}</div>
-          <div>Adresse: {data.adresse || "-"}</div>
+        <div className="flex flex-col items-center justify-center">
+          <div className="flex items-center gap-2">
+            <span className="text-sm">Date de Naissance :</span>
+            <span className="font-semibold text-md">{data.date_naissance || "..."}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-sm">Lieu de Naissance :</span>
+            <span className="font-semibold text-md">{data.lieu_naissance || "..."}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-sm">Téléphone :</span>
+            <span className="font-semibold text-md">{data.telephone || "..."}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-sm">Adresse domicille :</span>
+            <span className="font-semibold text-md">{data.adresse || "..."}</span>
+          </div>
         </div>
       </div>
 
-      <div
-        style={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: 22,
-          background: "linear-gradient(90deg, #0b2748 0%, #123f71 50%, #2b69ad 100%)",
-          opacity: 0.95,
-          zIndex: 0
-        }}
-      />
+     
     </div>
   );
 }

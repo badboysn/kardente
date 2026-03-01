@@ -3,6 +3,8 @@
 import { ChangeEvent, FormEvent } from "react";
 
 import { BadgePayload, WorkType } from "@/services/api";
+import { TfiSaveAlt } from "react-icons/tfi";
+import { IoSaveOutline } from "react-icons/io5";
 
 interface Props {
   data: BadgePayload;
@@ -56,17 +58,21 @@ export default function BadgeForm({ data, submitting, feedback, onChange, onSubm
   };
 
   return (
-    <form onSubmit={submit} className="card slide-up">
-      <h2 style={{ marginTop: 0 }}>Formulaire badge</h2>
-      <div className="form-grid stagger">
-        <input placeholder="Nom" value={data.nom} onChange={(e) => setField("nom", toUpper(e.target.value))} required />
+    <form onSubmit={submit} className=" bg-white w-1/2 py-10 px-6 rounded-2xl">
+      <h2 className="mb-10 text-3xl">Formulaire badge</h2>
+      <div className="grid grid-cols-2 gap-6">
+        <input placeholder="Nom de famille" value={data.nom} onChange={(e) => setField("nom", toUpper(e.target.value))} 
+          required 
+          className="border border-gray-300 outline-0 rounded-full px-4 py-2 text-lg"
+        />
         <input
-          placeholder="Prenom"
+          placeholder="Prénom"
           value={data.prenom}
           onChange={(e) => setField("prenom", toUpper(e.target.value))}
           required
+          className="border border-gray-300 outline-0 rounded-full px-4 py-2 text-lg"
         />
-        <input
+        {/* <input
           placeholder="Age"
           type="number"
           min={0}
@@ -74,64 +80,76 @@ export default function BadgeForm({ data, submitting, feedback, onChange, onSubm
           value={data.age}
           onChange={(e) => setField("age", Number(e.target.value))}
           required
-        />
+          className="border border-gray-400 outline-0 rounded-lg px-4 py-2 text-lg"
+        /> */}
         <input
           placeholder="Date de naissance"
           type="date"
           value={data.date_naissance}
           onChange={(e) => setField("date_naissance", e.target.value)}
           required
+          className="border border-gray-300 outline-0 rounded-full px-4 py-2 text-lg"
         />
         <input
           placeholder="Lieu de naissance"
           value={data.lieu_naissance}
           onChange={(e) => setField("lieu_naissance", e.target.value)}
           required
+          className="border border-gray-300 outline-0 rounded-full px-4 py-2 text-lg"
         />
         <input
-          placeholder="Telephone"
+          placeholder="Téléphone"
           type="tel"
           inputMode="numeric"
           value={data.telephone}
           onChange={(e) => setField("telephone", onlyDigits(e.target.value))}
           required
+          className="border border-gray-300 outline-0 rounded-full px-4 py-2 text-lg"
         />
         <input
-          placeholder="Contact urgence"
+          placeholder="Personne à contacter en cas d'urgence"
           value={data.contact_urgence}
           onChange={(e) => setField("contact_urgence", toUpper(e.target.value))}
           required
+          className="border border-gray-300 outline-0 rounded-full px-4 py-2 text-lg"
         />
         <input
-          placeholder="Numero contact urgence"
+          placeholder="Numéro de la personne à contacter"
           type="tel"
           inputMode="numeric"
           value={data.contact_urgence_numero}
           onChange={(e) => setField("contact_urgence_numero", onlyDigits(e.target.value))}
           required
+          className="border border-gray-300 outline-0 rounded-full px-4 py-2 text-lg"
         />
         <input
-          placeholder="Nationalite"
+          placeholder="Adresse domicile"
+          value={data.adresse}
+          onChange={(e) => setField("adresse", e.target.value)}
+          required
+          className="border border-gray-300 outline-0 rounded-full px-4 py-2 text-lg"
+        />
+        <input
+          placeholder="Nationalité"
           value={data.nationalite}
           onChange={(e) => setField("nationalite", e.target.value)}
           required
+          className="border border-gray-300 outline-0 rounded-full px-4 py-2 text-lg"
         />
         <input
           placeholder="Profession"
           value={data.profession}
           onChange={(e) => setField("profession", e.target.value)}
           required
+          className="border border-gray-300 outline-0 rounded-full px-4 py-2 text-lg"
         />
-        <select value={data.type_travail} onChange={(e) => onWorkTypeChange(e.target.value as WorkType)}>
+        <select value={data.type_travail} 
+          className="border border-gray-300 outline-0 rounded-full px-4 py-2 text-lg"
+        onChange={(e) => onWorkTypeChange(e.target.value as WorkType)}>
           <option value="individuel">Individuel</option>
           <option value="groupe">Groupe</option>
         </select>
-        <input
-          placeholder="Adresse domicile"
-          value={data.adresse}
-          onChange={(e) => setField("adresse", e.target.value)}
-          required
-        />
+        
         {data.type_travail === "groupe" ? (
           <>
             <input
@@ -139,30 +157,33 @@ export default function BadgeForm({ data, submitting, feedback, onChange, onSubm
               value={data.employeur_nom ?? ""}
               onChange={(e) => setField("employeur_nom", e.target.value)}
               required
+              className="border border-gray-300 outline-0 rounded-full px-4 py-2 text-lg"
             />
             <input
               placeholder="Prenom employeur"
               value={data.employeur_prenom ?? ""}
               onChange={(e) => setField("employeur_prenom", e.target.value)}
               required
+              className="border border-gray-300 outline-0 rounded-full px-4 py-2 text-lg"
             />
           </>
         ) : null}
       </div>
 
-      <label style={{ display: "block", marginTop: 12 }}>
-        Photo
-        <input type="file" accept="image/*" onChange={handlePhoto} />
-      </label>
+      <div className="py-6">
+        
+        <input type="file" className="w-full cursor-pointer bg-gray-100 p-4 rounded-full border-2 border-gray-200" accept="image/*" onChange={handlePhoto} />
+      </div>
 
       {feedback ? <p style={{ marginBottom: 0 }}>{feedback}</p> : null}
 
       <button
         type="submit"
         disabled={submitting}
-        style={{ marginTop: 12 }}
-      >
-        {submitting ? "Enregistrement..." : "Enregistrer"}
+        className="cursor-pointer flex gap-2 items-center justify-center py-3 px-4 rounded-full text-2xl bg-orange-600 text-white w-full text-center"
+      > 
+        <IoSaveOutline size={20}/>
+        {submitting ? "Enregistrement encours" : "Enregistrer"}
       </button>
     </form>
   );

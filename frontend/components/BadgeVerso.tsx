@@ -14,7 +14,7 @@ export default function BadgeVerso({ data }: Props) {
     <div
       style={{
         width: 340,
-        height: 214,
+        height: 514,
         background: "linear-gradient(180deg, #fefefe 0%, #f8fbff 100%)",
         borderRadius: 14,
         padding: 14,
@@ -30,8 +30,8 @@ export default function BadgeVerso({ data }: Props) {
           position: "absolute",
           top: 0,
           right: 0,
-          width: 132,
-          height: 214,
+          width: 10,
+          height: 514,
           background: "linear-gradient(180deg, #163b6d 0%, #0f2f59 100%)",
           clipPath: "polygon(60% 0, 100% 0, 100% 100%, 0 100%)"
         }}
@@ -41,8 +41,8 @@ export default function BadgeVerso({ data }: Props) {
           position: "absolute",
           left: 0,
           bottom: 0,
-          width: 200,
-          height: 95,
+          width: 250,
+          height: 160,
           background: "linear-gradient(140deg, #eaf2fb 0%, #d8e8fa 70%, rgba(216,232,250,0) 100%)",
           clipPath: "polygon(0 28%, 100% 100%, 0 100%)"
         }}
